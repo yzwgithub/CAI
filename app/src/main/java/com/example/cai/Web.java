@@ -16,7 +16,7 @@ public class Web extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
         webView= (WebView) findViewById(R.id.webview);
-        String url="http://www.baidu.com";
+        String url="";
         webView.loadUrl(url);
     }
 }
