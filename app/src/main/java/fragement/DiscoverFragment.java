@@ -17,19 +17,12 @@ public class DiscoverFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragement3,container,false);
+        View view=inflater.inflate(R.layout.fragement_entry,container,false);
         return view;
     }
 
-    private static DiscoverFragment instance=null;
-    public static DiscoverFragment newInstance() {
-        if(instance==null){
-            instance= new DiscoverFragment();
-        }
-        return instance;
-    }
-
-    public DiscoverFragment() {
-        // Required empty public constructor
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 }

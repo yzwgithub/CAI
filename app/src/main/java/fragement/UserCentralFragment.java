@@ -17,18 +17,12 @@ public class UserCentralFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragement,container,false);
+        View view=inflater.inflate(R.layout.fragement_mine,container,false);
         return view;
     }
-    private static UserCentralFragment instance=null;
-    public static UserCentralFragment newInstance() {
-        if(instance==null){
-            instance= new UserCentralFragment();
-        }
-        return instance;
-    }
 
-    public UserCentralFragment() {
-        // Required empty public constructor
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 }

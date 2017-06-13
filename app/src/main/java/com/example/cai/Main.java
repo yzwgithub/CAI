@@ -43,6 +43,7 @@ public class Main extends AppCompatActivity implements BottomNavigationBar.OnTab
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setCurrentItem(position);
+
 }
 
     @Override
@@ -81,6 +82,7 @@ public class Main extends AppCompatActivity implements BottomNavigationBar.OnTab
                 .addItem(new BottomNavigationItem(R.drawable.mine,"MINE")).setActiveColor("#ECECEC")
                 .setFirstSelectedPosition(0)
                 .initialise();
+        bottomNavigationBar.setTabSelectedListener(this);
     }
 
     private void initViewPager() {
