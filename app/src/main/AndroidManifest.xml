@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Register"></activity>
-        <activity android:name=".Web"></activity>
+        <activity android:name=".Main"></activity>
     </application>
 
 </manifest>

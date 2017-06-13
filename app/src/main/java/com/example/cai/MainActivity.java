@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1=new Intent(MainActivity.this,Web.class);
+                Intent intent1=new Intent(MainActivity.this,Main.class);
                 startActivity(intent1);
             }
         });
