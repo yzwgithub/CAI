@@ -32,8 +32,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:navigationIcon="@android:drawable/ic_dialog_email"
-                app:title="Title"/>
+                app:navigationIcon="@android:drawable/ic_menu_sort_by_size"/>
+                <!--app:navigationIcon="@android:drawable/ic_dialog_email"
+                app:title="Title"-->
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

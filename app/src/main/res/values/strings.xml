@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">易GO</string>
+    <string name="menu_search">搜索</string>
+    <string name="menu_notifications">项目1</string>
+    <string name="item_01">项目2</string>
+    <string name="item_02">项目3</string>
 </resources>

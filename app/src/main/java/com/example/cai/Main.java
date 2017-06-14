@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -76,10 +77,9 @@ public class Main extends AppCompatActivity implements BottomNavigationBar.OnTab
         bottomNavigationBar= (BottomNavigationBar) findViewById(R.id.buttom_bar);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_DEFAULT);
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);
-        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.home,"HOME")).setActiveColor("#ECECEC")
-                .addItem(new BottomNavigationItem(R.drawable.book,"BOOK")).setActiveColor("#ECECEC")
-                .addItem(new BottomNavigationItem(R.drawable.entry,"ENTRY")).setActiveColor("#ECECEC")
-                .addItem(new BottomNavigationItem(R.drawable.mine,"MINE")).setActiveColor("#ECECEC")
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_tab_home,"HOME")).setActiveColor("#ECECEC")
+                .addItem(new BottomNavigationItem(R.mipmap.ic_category,"CATLOG")).setActiveColor("#ECECEC")
+                .addItem(new BottomNavigationItem(R.mipmap.ic_user_center,"MINE")).setActiveColor("#ECECEC")
                 .setFirstSelectedPosition(0)
                 .initialise();
         bottomNavigationBar.setTabSelectedListener(this);
@@ -98,5 +98,4 @@ public class Main extends AppCompatActivity implements BottomNavigationBar.OnTab
         viewPager.addOnPageChangeListener(this);
         viewPager.setCurrentItem(0);
     }
-
 }
