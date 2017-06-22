@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:navigationIcon="@android:drawable/ic_menu_sort_by_size"/>
+                app:navigationIcon="@android:drawable/ic_menu_sort_by_size" />
                 <!--app:navigationIcon="@android:drawable/ic_dialog_email"
                 app:title="Title"-->
 
@@ -43,6 +43,7 @@
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/cardview_light_background"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>

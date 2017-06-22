@@ -1,13 +1,13 @@
 package com.example.cai;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.animation.FloatEvaluator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -27,16 +27,21 @@ import fragement.UserCentralFragment;
 
 public class Main extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener,ViewPager.OnPageChangeListener {
 
-    BottomNavigationBar bottomNavigationBar;
-    ViewPager viewPager;
+    private BottomNavigationBar bottomNavigationBar;
+   private ViewPager viewPager;
     private List<Fragment> fragments;
+    private SlidingMenu slidingMenu;
+    private static final String TAG = "MainActivity";
+    private FloatEvaluator mFloatEvaluator;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.main);
+        setContentView(R.layout.sliding_menu_layout);
         initBottonNavigation();
         initViewPager();
+        initSlidingMenu();
     }
 
     @Override
@@ -80,9 +85,10 @@ public class Main extends AppCompatActivity implements BottomNavigationBar.OnTab
         bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_tab_home,"HOME")).setActiveColor("#ECECEC")
                 .addItem(new BottomNavigationItem(R.mipmap.ic_category,"CATLOG")).setActiveColor("#ECECEC")
                 .addItem(new BottomNavigationItem(R.mipmap.ic_user_center,"MINE")).setActiveColor("#ECECEC")
+                .addItem(new BottomNavigationItem(R.mipmap.ic_category,"DISC")).setActiveColor("#ECECEC")
                 .setFirstSelectedPosition(0)
                 .initialise();
-        bottomNavigationBar.setTabSelectedListener(this);
+        bottomNavigationBar.setTabSelectedListener(this);//注册监听事件
     }
 
     private void initViewPager() {
@@ -93,9 +99,29 @@ public class Main extends AppCompatActivity implements BottomNavigationBar.OnTab
         fragments.add(new CatagoryFragment());
         fragments.add(new DiscoverFragment());
         fragments.add(new UserCentralFragment());
-
         viewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager(), fragments));
         viewPager.addOnPageChangeListener(this);
         viewPager.setCurrentItem(0);
+    }
+    private void initSlidingMenu(){
+        slidingMenu=new SlidingMenu(this);
+        slidingMenu.setOnSlideListener(new SlidingMenu.OnSlideListener() {
+            @Override
+            public void onOpen() {
+                Toast.makeText(Main.this, "onOpen", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onClose() {
+                Toast.makeText(Main.this, "onClose", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDraging(float fraction) {
+                Log.i(TAG, "fraction:" + fraction);
+                mFloatEvaluator=new FloatEvaluator();
+                mFloatEvaluator.evaluate(fraction,0,720);
+            }
+        });
     }
 }

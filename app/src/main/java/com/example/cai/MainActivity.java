@@ -3,10 +3,14 @@ package com.example.cai;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import fragement.HomeFragment;
 
 public class MainActivity extends Activity {
     TextView textView1,textView2;
@@ -36,7 +40,7 @@ public class MainActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1=new Intent(MainActivity.this,Main.class);
+                Intent intent1=new Intent(MainActivity.this, Main.class);
                 startActivity(intent1);
             }
         });
