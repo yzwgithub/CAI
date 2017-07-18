@@ -1,13 +1,14 @@
-package com.example.cai;
+package activity;
 
 import android.app.Activity;
-import android.content.Entity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+
+import com.example.cai.R;
 
 /**
  * Created by ASUS on 2017/5/10.
@@ -49,7 +50,7 @@ public class AppStart extends Activity {
 
     protected void redirectTo() {
         // TODO Auto-generated method stub
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, Login.class);
         startActivity(intent);
         finish();
     }

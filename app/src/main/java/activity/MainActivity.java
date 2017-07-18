@@ -1,4 +1,4 @@
-package com.example.cai;
+package activity;
 
 import android.animation.FloatEvaluator;
 import android.os.Bundle;
@@ -7,10 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.example.cai.R;
+import com.example.cai.SlidingMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +28,13 @@ import fragement.UserCentralFragment;
  * Created by ASUS on 2017/6/13.
  */
 
-public class Main extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener,ViewPager.OnPageChangeListener {
+public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener,ViewPager.OnPageChangeListener {
 
     private BottomNavigationBar bottomNavigationBar;
    private ViewPager viewPager;
     private List<Fragment> fragments;
     private SlidingMenu slidingMenu;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "Login";
     private FloatEvaluator mFloatEvaluator;
 
     @Override
@@ -99,6 +102,12 @@ public class Main extends AppCompatActivity implements BottomNavigationBar.OnTab
         fragments.add(new CatagoryFragment());
         fragments.add(new DiscoverFragment());
         fragments.add(new UserCentralFragment());
+        viewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+            @Override
+            public void transformPage(View page, float position) {
+                page.setRotationY(position * -30);
+            }
+        });
         viewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager(), fragments));
         viewPager.addOnPageChangeListener(this);
         viewPager.setCurrentItem(0);
@@ -108,12 +117,12 @@ public class Main extends AppCompatActivity implements BottomNavigationBar.OnTab
         slidingMenu.setOnSlideListener(new SlidingMenu.OnSlideListener() {
             @Override
             public void onOpen() {
-                Toast.makeText(Main.this, "onOpen", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "onOpen", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onClose() {
-                Toast.makeText(Main.this, "onClose", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "onClose", Toast.LENGTH_SHORT).show();
             }
 
             @Override

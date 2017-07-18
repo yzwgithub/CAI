@@ -24,7 +24,7 @@
         android:id="@+id/register_zhanghao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入账号"
+        android:hint="请输入手机号"
         android:textSize="20dp"
         android:layout_marginTop="115dp"
         android:textColorHint="#FFFFFF"
@@ -34,6 +34,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入密码"
+        android:textSize="20dp"
+        android:textColorHint="#FFFFFF"
+        android:textColor="#FFFFFF"/>
+    <EditText
+        android:id="@+id/confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="确认密码"
         android:textSize="20dp"
         android:textColorHint="#FFFFFF"
         android:textColor="#FFFFFF"/>
