@@ -9,17 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.cai.R;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import application.MyApplication;
 
 /**
  * Created by ASUS on 2017/7/17.
@@ -41,39 +37,25 @@ public class Register extends Activity{
             public void onClick(View v) {
                 String username=editText1.getText().toString();
                 String password=editText2.getText().toString();
-                GetThread getThread=new GetThread(username,password);
-                getThread.start();
+                String url="http://192.168.1.101:8080/servlet/RegisterServlet?account="+username+"&"+"password="+password;
+                StringRequest request=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        Toast.makeText(Register.this,s,Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(Register.this,Login.class);
+                        startActivity(intent);
+                        Register.this.finish();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Toast.makeText(Register.this,volleyError.toString(),Toast.LENGTH_SHORT).show();
+                    }
+                });
+                request.setTag("Login");
+                MyApplication.getHttpQueues().add(request);
+
             }
         });
-    }
-    class GetThread extends Thread{
-        String name;
-        String password;
-        public GetThread(String name,String password){
-            this.name=name;
-            this.password=password;
-        }
-
-        @Override
-        public void run() {
-            HttpClient httpClient=new DefaultHttpClient();
-            String url="http://192.168.1.122:8080/servlet/RegisterServlet?account="+name+"&"+"password="+password;
-            HttpGet httpGet=new HttpGet(url);
-            try {
-                HttpResponse responce=httpClient.execute(httpGet);
-                if (responce.getStatusLine().getStatusCode()==200){
-                    HttpEntity entry=responce.getEntity();
-                    BufferedReader reader=new BufferedReader(new InputStreamReader(entry.getContent()));
-                    String result=reader.readLine();
-                    Intent intent=new Intent(Register.this,Login.class);
-                    startActivity(intent);
-                    Register.this.finish();
-                }else {
-                    Toast.makeText(Register.this,"注册失败！",Toast.LENGTH_SHORT);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }
