@@ -16,7 +16,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +23,7 @@ import java.io.InputStreamReader;
 
 
 public class Login extends Activity {
-    TextView textView1,textView2;
+    TextView textView1,textView2,textView3;
     EditText editText1,editText2;
     Button button;
 
@@ -49,41 +48,46 @@ public class Login extends Activity {
                 Login.this.finish();
             }
         });
+        textView3= (TextView) findViewById(R.id.toast);
         button= (Button) findViewById(R.id.main_entry);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editText1= (EditText) findViewById(R.id.main_zhanghao);
-                editText2= (EditText) findViewById(R.id.main_password);
-                String username=editText1.getText().toString();
-                String password=editText2.getText().toString();
+                editText1 = (EditText) findViewById(R.id.main_zhanghao);
+                editText2 = (EditText) findViewById(R.id.main_password);
+                final String username = editText1.getText().toString();
+                final String password = editText2.getText().toString();
                 GetThread getThread=new GetThread(username,password);
                 getThread.start();
             }
         });
     }
+
     class GetThread extends Thread{
         String name;
         String password;
-        public GetThread(String name,String password){
+        String result;
+        public GetThread(String name, String password){
             this.name=name;
             this.password=password;
         }
-
         @Override
         public void run() {
             HttpClient httpClient=new DefaultHttpClient();
-            String url="http://192.168.1.122:8080/servlet/LoginServlet?account="+name+"&"+"password="+password;
+            String url="http://192.168.1.101:8080/servlet/LoginServlet?account="+name+"&"+"password="+password;
             HttpGet httpGet=new HttpGet(url);
             try {
                 HttpResponse responce=httpClient.execute(httpGet);
                 if (responce.getStatusLine().getStatusCode()==200){
-                    HttpEntity entry=responce.getEntity();
-                    BufferedReader reader=new BufferedReader(new InputStreamReader(entry.getContent()));
-                    String result=reader.readLine();
-                    Intent intent=new Intent(Login.this,MainActivity.class);
-                    startActivity(intent);
-                    Login.this.finish();
+//                    HttpEntity entry=responce.getEntity();
+//                    BufferedReader reader=new BufferedReader(new InputStreamReader(entry.getContent()));
+//                    while (reader.readLine()!=null){
+//                        result+=reader.readLine();
+//                    }
+                        Intent intent=new Intent(Login.this,MainActivity.class);
+                        startActivity(intent);
+                        Login.this.finish();
+
                 }
             } catch (IOException e) {
                 e.printStackTrace();

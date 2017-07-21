@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.cai.R;
 
@@ -67,6 +68,8 @@ public class Register extends Activity{
                     Intent intent=new Intent(Register.this,Login.class);
                     startActivity(intent);
                     Register.this.finish();
+                }else {
+                    Toast.makeText(Register.this,"注册失败！",Toast.LENGTH_SHORT);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
