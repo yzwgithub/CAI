@@ -23,13 +23,11 @@ public class Login extends AppCompatActivity {
     TextView textView1,textView2,textView3;
     EditText editText1,editText2;
     Button button;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-
         textView1= (TextView) findViewById(R.id.main_register);
         textView1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,9 +57,11 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onResponse(String s) {
                         Toast.makeText(Login.this,s,Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(Login.this,MainActivity.class);
-                        startActivity(intent);
-                        Login.this.finish();
+                        if (s.equals("登录成功")){
+                            Intent intent=new Intent(Login.this,MainActivity.class);
+                            startActivity(intent);
+                            Login.this.finish();
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override

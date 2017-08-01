@@ -37,14 +37,16 @@ public class Register extends Activity{
             public void onClick(View v) {
                 String username=editText1.getText().toString();
                 String password=editText2.getText().toString();
-                String url="http://192.168.1.101:8080/servlet/RegisterServlet?account="+username+"&"+"password="+password;
+                String url="http://192.168.1.122:8080/servlet/RegisterServlet?account="+username+"&"+"password="+password;
                 StringRequest request=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
                         Toast.makeText(Register.this,s,Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(Register.this,Login.class);
-                        startActivity(intent);
-                        Register.this.finish();
+                        if (s.equals("注册成功")){
+                            Intent intent=new Intent(Register.this,Login.class);
+                            startActivity(intent);
+                            Register.this.finish();
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override

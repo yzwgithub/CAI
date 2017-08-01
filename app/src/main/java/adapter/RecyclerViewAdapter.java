@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,19 +11,18 @@ import android.widget.TextView;
 
 import com.example.cai.R;
 
-import java.util.List;
-
 /**
  * Created by ASUS on 2017/6/13.
  */
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
-    private List<String> datas;
+    Bitmap []bitmaps;
+    String []ImgDisc;
     private LayoutInflater inflater;
-
-    public RecyclerViewAdapter(Context context, List<String> datas) {
+    public RecyclerViewAdapter(Context context, Bitmap[] bitmaps,String []ImgDisc) {
         inflater=LayoutInflater.from(context);
-        this.datas=datas;
+        this.bitmaps=bitmaps;
+        this.ImgDisc=ImgDisc;
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -33,12 +33,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        holder.textview.setText(datas.get(position));
+        holder.imageview.setImageBitmap(bitmaps[position]);
     }
 
     @Override
     public int getItemCount() {
-        return datas.size();
+        return bitmaps.length;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

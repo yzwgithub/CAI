@@ -1,47 +1,63 @@
 package fragement;
-
-import android.animation.FloatEvaluator;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.cai.DividerItemDecoration;
 import com.example.cai.R;
-import com.example.cai.SlidingMenu;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import adapter.RecyclerViewAdapter;
+import application.MyApplication;
+
 
 /**
  * Created by ASUS on 2017/6/13.
  */
 
 public class HomeFragment extends Fragment {
+    public static String url="http://192.168.1.101:8080/servlet/MainServlet";
+    public String imgurl="http://192.168.1.101:8080/servlet/MainServlet";
     private RecyclerViewAdapter adapter;
-    private List<String> datas;
+    Bitmap []bitmaps;
+    String []ImgDiscs;
+    String ImgDisc;
+    int finishedNumbers = 0;//已经下载完的图片数
+    private boolean isFirstBoot = true;//判断第一次启动，开始下载图片
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragement_home,container,false);
         return view;
     }
-
     private void initData() {
-        datas = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            datas.add("item:" + i);
+        bitmaps=new Bitmap[20];
+        ImgDiscs=new String [20];
+        for (int i=0;i<20;i++){
+            Bitmap bitmap= BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher_round);
+            bitmaps[i]=bitmap;
+            ImgDiscs[i]=getImgDisc();
         }
     }
     private void initRecyclerView(){
@@ -50,15 +66,18 @@ public class HomeFragment extends Fragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
-        recyclerView.setAdapter(adapter=new RecyclerViewAdapter(getActivity(),datas));
+        recyclerView.setAdapter(adapter=new RecyclerViewAdapter(getActivity(),bitmaps,ImgDiscs));
     }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initData();
         initRecyclerView();
         initToolBar();
+        if (isFirstBoot) {
+            getImgUrl();
+            isFirstBoot=false;
+        }
     }
     private void initToolBar(){
         Toolbar toolbar= (Toolbar) getView().findViewById(R.id.tb_toolbar);
@@ -75,7 +94,6 @@ public class HomeFragment extends Fragment {
                         break;
                     case R.id.action_item2:
                         break;
-
                 }
                 return true;
             }
@@ -85,5 +103,56 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
             }
         });
+    }
+    public void downLoadPhoto(String Imgurl,String ImgDisc){
+        setImgDisc(ImgDisc);
+        ImageRequest imageRequest=new ImageRequest(Imgurl, new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap bitmap) {
+                bitmaps[finishedNumbers] = bitmap;
+                finishedNumbers++;
+                adapter.notifyDataSetChanged();
+            }
+        }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        });
+        MyApplication.getHttpQueues().add(imageRequest);
+    }
+    public void getImgUrl(){
+        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(imgurl, new Response.Listener<JSONArray>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                String a[]=new String [20];
+                try {
+                    JSONArray jsonArray1=new JSONArray(jsonArray.toString());
+                    for (int i=0;i<jsonArray.length();i++){
+                        JSONObject object=jsonArray1.getJSONObject(i);
+                        downLoadPhoto(object.getString("src"),object.getString("disc"));
+                        a[i]=object.getString("disc");
+                    }
+                    Toast.makeText(getActivity(),a[1],Toast.LENGTH_LONG).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        });
+        MyApplication.getHttpQueues().add(jsonArrayRequest);
+    }
+
+    public String getImgDisc() {
+        return ImgDisc;
+    }
+
+    public void setImgDisc(String imgDisc) {
+        ImgDisc = imgDisc;
     }
 }
