@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -31,18 +30,16 @@ import org.json.JSONObject;
 import adapter.RecyclerViewAdapter;
 import application.MyApplication;
 
-
 /**
  * Created by ASUS on 2017/6/13.
  */
 
 public class HomeFragment extends Fragment {
-    public static String url="http://192.168.1.101:8080/servlet/MainServlet";
-    public String imgurl="http://192.168.1.101:8080/servlet/MainServlet";
+    public static String url="http://192.168.1.122:8080/servlet/MainServlet";
+    public String imgurl="http://192.168.1.122:8080/servlet/MainServlet";
     private RecyclerViewAdapter adapter;
     Bitmap []bitmaps;
-    String []ImgDiscs;
-    String ImgDisc;
+    String []ImgDiscs=new String [20];
     int finishedNumbers = 0;//已经下载完的图片数
     private boolean isFirstBoot = true;//判断第一次启动，开始下载图片
     @Nullable
@@ -51,13 +48,22 @@ public class HomeFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragement_home,container,false);
         return view;
     }
-    private void initData() {
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initToolBar();
+        if (isFirstBoot) {
+            getImgUrl();
+            isFirstBoot=false;
+        }
+        initRecyclerView();
+    }
+    private void initData(String []ImgDiscs) {
+        this.ImgDiscs=ImgDiscs;
         bitmaps=new Bitmap[20];
-        ImgDiscs=new String [20];
         for (int i=0;i<20;i++){
             Bitmap bitmap= BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher_round);
             bitmaps[i]=bitmap;
-            ImgDiscs[i]=getImgDisc();
         }
     }
     private void initRecyclerView(){
@@ -67,17 +73,6 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
         recyclerView.setAdapter(adapter=new RecyclerViewAdapter(getActivity(),bitmaps,ImgDiscs));
-    }
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initData();
-        initRecyclerView();
-        initToolBar();
-        if (isFirstBoot) {
-            getImgUrl();
-            isFirstBoot=false;
-        }
     }
     private void initToolBar(){
         Toolbar toolbar= (Toolbar) getView().findViewById(R.id.tb_toolbar);
@@ -104,8 +99,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-    public void downLoadPhoto(String Imgurl,String ImgDisc){
-        setImgDisc(ImgDisc);
+    public void downLoadPhoto(String Imgurl){
         ImageRequest imageRequest=new ImageRequest(Imgurl, new Response.Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap bitmap) {
@@ -126,15 +120,13 @@ public class HomeFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(JSONArray jsonArray) {
-                String a[]=new String [20];
                 try {
                     JSONArray jsonArray1=new JSONArray(jsonArray.toString());
                     for (int i=0;i<jsonArray.length();i++){
                         JSONObject object=jsonArray1.getJSONObject(i);
-                        downLoadPhoto(object.getString("src"),object.getString("disc"));
-                        a[i]=object.getString("disc");
+                        downLoadPhoto(object.getString("src"));
+                        ImgDiscs[i]=object.getString("disc");
                     }
-                    Toast.makeText(getActivity(),a[1],Toast.LENGTH_LONG).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -146,13 +138,6 @@ public class HomeFragment extends Fragment {
             }
         });
         MyApplication.getHttpQueues().add(jsonArrayRequest);
-    }
-
-    public String getImgDisc() {
-        return ImgDisc;
-    }
-
-    public void setImgDisc(String imgDisc) {
-        ImgDisc = imgDisc;
+        initData(ImgDiscs);
     }
 }

@@ -52,7 +52,7 @@ public class Login extends AppCompatActivity {
                 editText2 = (EditText) findViewById(R.id.main_password);
                 final String username = editText1.getText().toString();
                 final String password = editText2.getText().toString();
-                String url="http://192.168.1.101:8080/servlet/LoginServlet?account="+username+"&"+"password="+password;
+                String url="http://192.168.1.122:8080/servlet/LoginServlet?account="+username+"&"+"password="+password;
                 StringRequest request=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
