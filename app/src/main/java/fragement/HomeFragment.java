@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
         recyclerView.setAdapter(adapter=new RecyclerViewAdapter(getActivity(),bitmaps,ImgDiscs));
     }
     private void initToolBar(){
@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment {
                 finishedNumbers++;
                 adapter.notifyDataSetChanged();
             }
-        }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
+        }, 10, 10, Bitmap.Config.RGB_565, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
