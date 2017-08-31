@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.cai.SlidingMenu xmlns:android="http://schemas.android.com/apk/res/android"
+<util.SlidingMenu xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@drawable/bg">
     <include layout="@layout/sliding_menu"/>
     <include layout="@layout/main"/>
-</com.example.cai.SlidingMenu>
+</util.SlidingMenu>

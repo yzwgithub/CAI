@@ -20,7 +20,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.example.cai.DividerItemDecoration;
 import com.example.cai.R;
 
 import org.json.JSONArray;
@@ -28,15 +27,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import adapter.RecyclerViewAdapter;
-import application.MyApplication;
+import util.MyApplication;
 
 /**
  * Created by ASUS on 2017/6/13.
  */
 
 public class HomeFragment extends Fragment {
-    public static String url="http://192.168.1.122:8080/servlet/MainServlet";
-    public String imgurl="http://192.168.1.122:8080/servlet/MainServlet";
+    final String url="http://192.168.1.103:8080/servlet/MainServlet";
+    final String imgurl="http://192.168.1.103:8080/servlet/MainServlet";
     private RecyclerViewAdapter adapter;
     Bitmap []bitmaps;
     String []ImgDiscs=new String [20];
@@ -71,7 +70,7 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
         recyclerView.setAdapter(adapter=new RecyclerViewAdapter(getActivity(),bitmaps,ImgDiscs));
     }
     private void initToolBar(){

@@ -1,4 +1,4 @@
-package com.example.cai;
+package util;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,6 +8,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
+
+import com.example.cai.R;
 
 /**
  * Created by ASUS on 2017/6/12.
@@ -26,7 +28,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private Paint mPaint;//绘制item分割线的画笔，和设置其属性
 
     public DividerItemDecoration(Context context) {
-        this(context,LinearLayoutManager.VERTICAL,R.color.colorAccent);
+        this(context,LinearLayoutManager.VERTICAL, R.color.colorAccent);
     }
 
     public DividerItemDecoration(Context context, int orientation) {

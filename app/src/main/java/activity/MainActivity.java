@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.cai.R;
-import com.example.cai.SlidingMenu;
+import util.SlidingMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import fragement.UserCentralFragment;
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener,ViewPager.OnPageChangeListener {
 
     private BottomNavigationBar bottomNavigationBar;
-   private ViewPager viewPager;
+    private ViewPager viewPager;
     private List<Fragment> fragments;
     private SlidingMenu slidingMenu;
     private static final String TAG = "Login";

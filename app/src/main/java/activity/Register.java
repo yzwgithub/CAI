@@ -15,7 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.cai.R;
 
-import application.MyApplication;
+import util.MyApplication;
 
 /**
  * Created by ASUS on 2017/7/17.
@@ -28,10 +28,7 @@ public class Register extends Activity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-        editText1= (EditText) findViewById(R.id.register_zhanghao);
-        editText2= (EditText) findViewById(R.id.register_password);
-        editText3= (EditText) findViewById(R.id.confirm_password);
-        button= (Button) findViewById(R.id.register_finish);
+        initView();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,5 +56,11 @@ public class Register extends Activity{
 
             }
         });
+    }
+    private void initView(){
+        editText1= (EditText) findViewById(R.id.register_zhanghao);
+        editText2= (EditText) findViewById(R.id.register_password);
+        editText3= (EditText) findViewById(R.id.confirm_password);
+        button= (Button) findViewById(R.id.register_finish);
     }
 }
