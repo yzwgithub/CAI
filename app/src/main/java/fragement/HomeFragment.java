@@ -106,7 +106,7 @@ public class HomeFragment extends Fragment {
                 finishedNumbers++;
                 adapter.notifyDataSetChanged();
             }
-        }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
+        }, 10, 10, Bitmap.Config.RGB_565, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
