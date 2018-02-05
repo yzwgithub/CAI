@@ -1,4 +1,4 @@
-package fragement;
+package fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,11 +13,11 @@ import com.example.cai.R;
  * Created by ASUS on 2017/6/13.
  */
 
-public class UserCentralFragment extends Fragment {
+public class DiscoverFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragement_mine,container,false);
+        View view=inflater.inflate(R.layout.fragement_entry,container,false);
         return view;
     }
 

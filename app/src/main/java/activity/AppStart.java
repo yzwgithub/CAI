@@ -10,14 +10,18 @@ import android.view.animation.Animation;
 
 import com.example.cai.R;
 
+import java.util.Map;
+
+import util.SharedHelper;
+
 /**
  * Created by ASUS on 2017/5/10.
  */
 
 public class AppStart extends Activity {
+    private SharedHelper sharedHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         final View view = View.inflate(this, R.layout.startactivity, null);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -31,26 +35,26 @@ public class AppStart extends Activity {
         {
             @Override
             public void onAnimationEnd(Animation arg0) {
-                // TODO Auto-generated method stub
                 redirectTo();
             }
             @Override
             public void onAnimationRepeat(Animation arg0) {
-                // TODO Auto-generated method stub
 
             }
             @Override
             public void onAnimationStart(Animation arg0) {
-                // TODO Auto-generated method stub
 
             }
 
         });
     }
-
     protected void redirectTo() {
-        // TODO Auto-generated method stub
-        Intent intent = new Intent(this, Login.class);
+        sharedHelper=new SharedHelper(AppStart.this);
+        Map<String,String> data=sharedHelper.read();
+        Intent intent;
+        if (!data.get("username").equals("")||!data.get("password").equals("")){
+             intent= new Intent(this, MainActivity.class);
+        }else intent = new Intent(this, Login.class);
         startActivity(intent);
         finish();
     }

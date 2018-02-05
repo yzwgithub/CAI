@@ -19,10 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adapter.SectionsPagerAdapter;
-import fragement.CatagoryFragment;
-import fragement.DiscoverFragment;
-import fragement.HomeFragment;
-import fragement.UserCentralFragment;
+import fragment.CatagoryFragment;
+import fragment.DiscoverFragment;
+import fragment.HomeFragment;
+import fragment.UserCentralFragment;
 
 /**
  * Created by ASUS on 2017/6/13.

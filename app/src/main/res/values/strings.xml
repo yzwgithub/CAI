@@ -2,6 +2,9 @@
     <string name="app_name">易GO</string>
     <string name="menu_search">搜索</string>
     <string name="menu_notifications">项目1</string>
-    <string name="item_01">项目2</string>
-    <string name="item_02">项目3</string>
+    <string name="item_01">退出登录</string>
+    <string name="item_02">清理缓存</string>
+    <string name="login">用户登录</string>
+    <string name="register">没有账号？立即注册</string>
+    <string name="go_register">用户注册</string>
 </resources>

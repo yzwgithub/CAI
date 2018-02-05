@@ -1,4 +1,4 @@
-package fragement;
+package fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -26,17 +26,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Map;
+
 import adapter.RecyclerViewAdapter;
+import util.Constance;
 import util.MyApplication;
+import util.SharedHelper;
 
 /**
  * Created by ASUS on 2017/6/13.
  */
 
 public class HomeFragment extends Fragment {
-    final String url="http://192.168.1.103:8080/servlet/MainServlet";
-    final String imgurl="http://192.168.1.103:8080/servlet/MainServlet";
     private RecyclerViewAdapter adapter;
+    private SharedHelper sharedHelper;
     Bitmap []bitmaps;
     String []ImgDiscs=new String [20];
     int finishedNumbers = 0;//已经下载完的图片数
@@ -70,7 +73,6 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-        //recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
         recyclerView.setAdapter(adapter=new RecyclerViewAdapter(getActivity(),bitmaps,ImgDiscs));
     }
     private void initToolBar(){
@@ -81,10 +83,14 @@ public class HomeFragment extends Fragment {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                sharedHelper=new SharedHelper(getContext());
+                Map<String,String> data=sharedHelper.read();
                 switch (item.getItemId()){
                     case R.id.search:
                         break;
                     case  R.id.action_item1:
+                        sharedHelper.save(null, null);
+                        getActivity().finish();
                         break;
                     case R.id.action_item2:
                         break;
@@ -106,7 +112,7 @@ public class HomeFragment extends Fragment {
                 finishedNumbers++;
                 adapter.notifyDataSetChanged();
             }
-        }, 10, 10, Bitmap.Config.RGB_565, new Response.ErrorListener() {
+        }, 500, 500, Bitmap.Config.RGB_565, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
@@ -115,15 +121,17 @@ public class HomeFragment extends Fragment {
         MyApplication.getHttpQueues().add(imageRequest);
     }
     public void getImgUrl(){
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(imgurl, new Response.Listener<JSONArray>() {
+        final String imgUrl= Constance.url+"servlet/MainServlet";
+        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(imgUrl, new Response.Listener<JSONArray>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(JSONArray jsonArray) {
                 try {
                     JSONArray jsonArray1=new JSONArray(jsonArray.toString());
-                    for (int i=0;i<jsonArray.length();i++){
+                    for (int i=0;i<20;i++){
                         JSONObject object=jsonArray1.getJSONObject(i);
                         downLoadPhoto(object.getString("src"));
+                        System.out.println(object.getString("src"));
                         ImgDiscs[i]=object.getString("disc");
                     }
                 } catch (JSONException e) {

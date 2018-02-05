@@ -15,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.cai.R;
 
+import util.Constance;
 import util.MyApplication;
 
 /**
@@ -34,7 +35,7 @@ public class Register extends Activity{
             public void onClick(View v) {
                 String username=editText1.getText().toString();
                 String password=editText2.getText().toString();
-                String url="http://192.168.1.122:8080/servlet/RegisterServlet?account="+username+"&"+"password="+password;
+                String url= Constance.url+"servlet/RegisterServlet?account="+username+"&"+"password="+password;
                 StringRequest request=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
