@@ -11,13 +11,16 @@ import android.widget.TextView;
 
 import com.example.cai.R;
 
+import Listener.OnItemClickListener;
+
 /**
  * Created by ASUS on 2017/6/13.
  */
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
-    Bitmap []bitmaps;
-    String []ImgDisc;
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>{
+    private OnItemClickListener listener=null;
+    private Bitmap []bitmaps;
+    private String []ImgDisc;
     private LayoutInflater inflater;
     public RecyclerViewAdapter(Context context, Bitmap[] bitmaps,String []ImgDisc) {
         inflater=LayoutInflater.from(context);
@@ -42,13 +45,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return bitmaps.length;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView textview;
         private ImageView imageview;
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(final View itemView) {
             super(itemView);
             textview= (TextView) itemView.findViewById(R.id.card);
             imageview= (ImageView) itemView.findViewById(R.id.img);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            if (listener!=null){
+                listener.onClick(v,getAdapterPosition());
+            }
+        }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+
+        this.listener=listener;
+
     }
 }

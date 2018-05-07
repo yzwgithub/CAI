@@ -5,5 +5,5 @@ package util;
  */
 
 public class Constance {
-    public static final String url = "http://192.168.0.104:8080/";
+    public static final String url = "http://192.168.10.1:8080/";
 }

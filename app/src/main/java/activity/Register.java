@@ -30,38 +30,40 @@ public class Register extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
         initView();
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String username=editText1.getText().toString();
-                String password=editText2.getText().toString();
-                String url= Constance.url+"servlet/RegisterServlet?account="+username+"&"+"password="+password;
-                StringRequest request=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String s) {
-                        Toast.makeText(Register.this,s,Toast.LENGTH_SHORT).show();
-                        if (s.equals("注册成功")){
-                            Intent intent=new Intent(Register.this,Login.class);
-                            startActivity(intent);
-                            Register.this.finish();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(Register.this,volleyError.toString(),Toast.LENGTH_SHORT).show();
-                    }
-                });
-                request.setTag("Login");
-                MyApplication.getHttpQueues().add(request);
-
-            }
-        });
     }
     private void initView(){
         editText1= (EditText) findViewById(R.id.register_zhanghao);
         editText2= (EditText) findViewById(R.id.register_password);
         editText3= (EditText) findViewById(R.id.confirm_password);
         button= (Button) findViewById(R.id.register_finish);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String username=editText1.getText().toString();
+                String password=editText2.getText().toString();
+                String url= Constance.url+"servlet/RegisterServlet?account="+username+"&"+"password="+password;
+                register(url);
+    }
+    private void register(String url){
+        StringRequest request=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                Toast.makeText(Register.this,s,Toast.LENGTH_SHORT).show();
+                if (s.equals("注册成功")){
+                    Intent intent=new Intent(Register.this,Login.class);
+                    startActivity(intent);
+                    Register.this.finish();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(Register.this,volleyError.toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
+        request.setTag("Login");
+        MyApplication.getHttpQueues().add(request);
+        }
+        });
     }
 }

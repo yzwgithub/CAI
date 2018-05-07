@@ -7,4 +7,16 @@
     <string name="login">用户登录</string>
     <string name="register">没有账号？立即注册</string>
     <string name="go_register">用户注册</string>
+    <string name="edit_personal_info">编辑个人信息</string>
+    <string name="name">姓名</string>
+    <string name="phone_number">电话</string>
+    <string name="e_mail">邮箱</string>
+    <string name="save">保存</string>
+    <string name="my_pay">我的订单</string>
+    <string name="reset_password">修改密码</string>
+    <string name="new_password">输入新密码</string>
+    <string name="ensure_password">确认密码</string>
+    <string name="suggestion">建议与反馈</string>
+    <string name="word_size">请输入反馈内容，200字以内</string>
+    <string name="commit">提交</string>
 </resources>

@@ -1,6 +1,7 @@
 package activity;
 
 import android.animation.FloatEvaluator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -19,10 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adapter.SectionsPagerAdapter;
-import fragment.CatagoryFragment;
-import fragment.DiscoverFragment;
-import fragment.HomeFragment;
-import fragment.UserCentralFragment;
+import fragment.BuyFragment;
+import fragment.MainFragment;
 
 /**
  * Created by ASUS on 2017/6/13.
@@ -36,13 +36,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private SlidingMenu slidingMenu;
     private static final String TAG = "Login";
     private FloatEvaluator mFloatEvaluator;
+    private TextView textView1,textView2,textView3,textView4;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.sliding_menu_layout);
-        initBottonNavigation();
+        initView();
+        initButtonNavigation();
         initViewPager();
         initSlidingMenu();
     }
@@ -81,14 +83,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
     }
 
-    private void initBottonNavigation(){
+    private void initButtonNavigation(){
         bottomNavigationBar= (BottomNavigationBar) findViewById(R.id.buttom_bar);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_DEFAULT);
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);
-        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_tab_home,"HOME")).setActiveColor("#ECECEC")
-                .addItem(new BottomNavigationItem(R.mipmap.ic_category,"CATLOG")).setActiveColor("#ECECEC")
-                .addItem(new BottomNavigationItem(R.mipmap.ic_user_center,"MINE")).setActiveColor("#ECECEC")
-                .addItem(new BottomNavigationItem(R.mipmap.ic_category,"DISC")).setActiveColor("#ECECEC")
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_tab_home,"首页")).setActiveColor("#ECECEC")
+                .addItem(new BottomNavigationItem(R.mipmap.ic_category,"高级定制")).setActiveColor("#ECECEC")
                 .setFirstSelectedPosition(0)
                 .initialise();
         bottomNavigationBar.setTabSelectedListener(this);//注册监听事件
@@ -97,11 +97,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private void initViewPager() {
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
-        fragments = new ArrayList<Fragment>();
-        fragments.add(new HomeFragment());
-        fragments.add(new CatagoryFragment());
-        fragments.add(new DiscoverFragment());
-        fragments.add(new UserCentralFragment());
+        fragments = new ArrayList<>();
+        fragments.add(new MainFragment());
+        fragments.add(new BuyFragment());
         viewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
             @Override
             public void transformPage(View page, float position) {
@@ -132,5 +130,40 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 mFloatEvaluator.evaluate(fraction,0,720);
             }
         });
+    }
+    private void initView(){
+        textView1= (TextView) findViewById(R.id.personal_information);
+        textView2= (TextView) findViewById(R.id.my_pay);
+        textView3= (TextView) findViewById(R.id.reset_password);
+        textView4= (TextView) findViewById(R.id.suggest);
+        textView1.setOnClickListener(new onClick());
+        textView2.setOnClickListener(new onClick());
+        textView3.setOnClickListener(new onClick());
+        textView4.setOnClickListener(new onClick());
+    }
+
+    private class onClick implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.personal_information:
+                    Intent intent=new Intent(MainActivity.this,PersonalActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.my_pay:
+                    Intent intent1=new Intent(MainActivity.this,MyPay.class);
+                    startActivity(intent1);
+                    break;
+                case R.id.reset_password:
+                    Intent intent2=new Intent(MainActivity.this,ResetPassword.class);
+                    startActivity(intent2);
+                    break;
+                case R.id.suggest:
+                    Intent intent3=new Intent(MainActivity.this,Suggestion.class);
+                    startActivity(intent3);
+                    break;
+            }
+        }
     }
 }

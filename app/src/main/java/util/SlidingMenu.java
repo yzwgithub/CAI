@@ -35,7 +35,7 @@ public class SlidingMenu extends FrameLayout{
     private ArgbEvaluator mArgbEvaluator;
     private OnSlideListener mOnSlideListener;
     // 表示当前状态: 关闭
-    private DragState mDragState = DragState.Close;
+    public DragState mDragState = DragState.Close;
 
     public enum DragState{
         Open ,Close
@@ -222,7 +222,7 @@ public class SlidingMenu extends FrameLayout{
     /**
      * 根据拖拽的百分比来进行伴随动画效果
      */
-    private void execAnim(float fraction) {
+    public void execAnim(float fraction) {
         // mainView的缩放
         mMainView.setScaleX(mFloatEvaluator.evaluate(fraction , 1.0f , 0.8f));
         mMainView.setScaleY(mFloatEvaluator.evaluate(fraction , 1.0f , 0.8f));
